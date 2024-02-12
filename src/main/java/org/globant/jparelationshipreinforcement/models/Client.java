@@ -6,12 +6,15 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "clients")
@@ -25,8 +28,14 @@ public class Client {
 
     private String lastname;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "client_id")
+    // @JoinColumn(name = "client_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinTable(
+            name="clients_addresses_details", 
+            joinColumns =  @JoinColumn(name = "client_id"),
+            inverseJoinColumns = @JoinColumn(name="address_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"address_id"}))
+    //@Fetch(FetchType.EAGER)
     private List<Adress> addresses;
 
     public Client() {
@@ -81,7 +90,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client [id=" + id + ", name=" + name + ", lastname=" + lastname + ", addresses=" + addresses + "]";
+        return "Client [id=" + id + ", name=" + name + ", lastname=" + lastname + ", addresses=" + addresses.toString() + "]";
     }
 
 }

@@ -1,6 +1,5 @@
 package org.globant.jparelationshipreinforcement.models;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,35 +28,6 @@ public class Adress {
         this.streetNumber = streetNumber;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Adress other = (Adress) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        if (street == null) {
-            if (other.street != null)
-                return false;
-        } else if (!street.equals(other.street))
-            return false;
-        if (streetNumber == null) {
-            if (other.streetNumber != null)
-                return false;
-        } else if (!streetNumber.equals(other.streetNumber))
-            return false;
-        return true;
-    }
-
-
-
     public Long getId() {
         return id;
     }
@@ -82,5 +52,9 @@ public class Adress {
         this.streetNumber = streetNumber;
     }
 
-    
+    @Override
+    public String toString() {
+        return "Adress [id=" + id + ", street=" + street + ", streetNumber=" + streetNumber + "]";
+    }
+
 }

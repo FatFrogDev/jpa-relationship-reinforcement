@@ -4,9 +4,9 @@ This application contains a simple spring proyect, using `jpa` and `hibernate` r
 
 ## Description
 
-The idea of the proyect was to make some experiments using hibernate, so, in the first commit, we are using a "common" relationship among `clients` & `addresses`, by saying that, I mean that addresses contains a foreign key that references his owner as a client.
+The idea of the proyect was to make some experiments using hibernate, so, in the first commit, we are using a "common" relationship among `clients` & `addresses`, by saying that, I mean that addresses contains a foreign key that references his owner as a client. Also, trying some query methods.
 
-The latest commit uses the hibernate's recomendation to handle relathionsips wiht intermedium tables, so, here we have no longer a foreign key in `addresses` that belongs to an user, instead, hibernate creates a `clients_addresses` table, which <strong>contains both of its keys</strong> as foreign keys, thus, it makes a more 'clear' design, but this doesn't mean that the first version is a bad practice. 
+The latest commit uses the hibernate's recomendation to handle relathionsips wiht intermedium tables, so, here we have no longer a foreign key in `addresses` that belongs to an user, instead, hibernate creates a `clients_addresses` table, which <strong>contains both of its keys</strong> as foreign keys, thus, it makes a more 'clear' design, but this doesn't mean that the first version is a bad practice.
 
 ## How to use
 

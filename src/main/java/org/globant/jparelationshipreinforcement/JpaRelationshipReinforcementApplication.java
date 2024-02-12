@@ -2,6 +2,7 @@ package org.globant.jparelationshipreinforcement;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.List;
 
 import org.globant.jparelationshipreinforcement.models.Adress;
 import org.globant.jparelationshipreinforcement.models.Client;
@@ -11,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.transaction.Transactional;
 
 @SpringBootApplication
 public class JpaRelationshipReinforcementApplication implements CommandLineRunner{
@@ -29,7 +30,7 @@ public class JpaRelationshipReinforcementApplication implements CommandLineRunne
 
 	@Override
 	public void run(String... args) throws Exception {
-		OneToManyFindById();
+		findClientEndingWith();
 	}
 
 	/** 
@@ -49,7 +50,7 @@ public class JpaRelationshipReinforcementApplication implements CommandLineRunne
 	}
 
 	@Transactional
-	public void OneToManyFindById(){
+	public void editClientAndAddressById(){
 		Optional<Client> client = clientRepo.findById(2L);
 
 		client.ifPresent(foundClient ->{
@@ -58,11 +59,67 @@ public class JpaRelationshipReinforcementApplication implements CommandLineRunne
 
 			foundClient.setAddresses(Arrays.asList(adress1, adress2));
 
-			// Ufpdates a client
+			// Updates a client
 			clientRepo.save(foundClient);
 
 			System.out.println(foundClient);
 		});
+	}
+
+	@Transactional(readOnly=true)
+	public void findClientStartingWith(){
+		String pattern="J";
+		Object[] client =  clientRepo.findClientStartingWith(pattern);
+		if (client.length>0)
+		{
+			System.out.println("Client or clients found that name starts with " + pattern);
+
+			for(Object clientLoop:client){
+				System.out.println(clientLoop);
+			}
+
+		}else System.out.println("There are no users with name that starts with " + pattern);
+		
+	}
+
+	@Transactional(readOnly=true)
+	public void findClientEndingWith(){
+		String pattern="a";
+		Object[] clients =  clientRepo.findClientEndingWith(pattern);
+		if (clients.length>0)
+		{
+			System.out.println("Client or clients found that name ends with " + pattern);
+
+			for(Object clientLoop:clients){
+				System.out.println(clientLoop);
+			}
+
+		}else System.out.println("There are no users with name that ends with " + pattern);
+		
+	}
+
+	@Transactional
+	public void findAllCLientsWithInvoices(){
+		Client client = new Client("Deyby", "ariza");
+		Client client2 = new Client("Carlos", "Casas");
+		
+		Adress adress1 = new Adress(null, "St monica street", 15);
+		Adress adress2 = new Adress(null, "Boca raton", 223);
+		
+		Adress adress3 = new Adress(null, "Kenedy's Village Street", 912);
+		Adress adress4 = new Adress(null, "Fishers lake", 1200);
+
+		client.setAddresses(Arrays.asList(adress1, adress2));
+		client2.setAddresses(Arrays.asList(adress3, adress4));
+		
+		clientRepo.save(client);
+		clientRepo.save(client2);
+
+		// Saving a client with invoices
+		List<Client> clients = (List<Client>) clientRepo.findAll();
+		
+		clients.forEach(System.out::println);
+
 	}
 
 }
