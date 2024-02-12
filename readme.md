@@ -17,7 +17,7 @@ The database script is locate in `src\main\resources\import.sql`, this contains 
 Now, it is similar to a console program, so all the methods definition are in the main class, there are some written methds, so you can try adding new ones, executing existing methods or modyfing them. 
 
 > **Note:**
-Remember tha he run method must call the desired method to execute.
+Remember tha the run method must call the desired method to execute.
 
 ## Technologies
 
