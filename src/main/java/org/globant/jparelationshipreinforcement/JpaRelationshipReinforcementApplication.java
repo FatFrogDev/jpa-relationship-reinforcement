@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.globant.jparelationshipreinforcement.models.Adress;
 import org.globant.jparelationshipreinforcement.models.Client;
+import org.globant.jparelationshipreinforcement.models.Invoice;
 import org.globant.jparelationshipreinforcement.repository.ClientRepository;
 import org.globant.jparelationshipreinforcement.repository.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,25 @@ public class JpaRelationshipReinforcementApplication implements CommandLineRunne
 
 	@Override
 	public void run(String... args) throws Exception {
-		findClientEndingWith();
+		OneToManyInvoice();
+	}
+
+
+	@Transactional()
+	public void OneToManyInvoice(){
+		Client client = new Client("Marlon", "Caicedo");
+
+		Invoice invoice1 = new Invoice("Compras para el hogar", 120_000L);
+		Invoice invoice2 = new Invoice("Compras para el patio", 20_000L);
+
+		// Alternative method to add invoices  through concatenation
+		// client.addInvoice(invoice1).addInvoice(invoice2);
+
+		client.setInvoices(Arrays.asList(invoice1, invoice2));
+
+		clientRepo.save(client);
+
+		System.out.println(client.toString());
 	}
 
 	/** 
@@ -41,7 +60,6 @@ public class JpaRelationshipReinforcementApplication implements CommandLineRunne
 		Client client = new Client("Deyby", "ariza");
 		
 		Adress adress1 = new Adress(null, "St monica street", 15);
-
 		Adress adress2 = new Adress(null, "Boca raton", 223);
 
 		client.setAddresses(Arrays.asList(adress1, adress2));

@@ -54,7 +54,7 @@ public class Adress {
 
     @Override
     public String toString() {
-        return "Adress [id=" + id + ", street=" + street + ", streetNumber=" + streetNumber + "]";
+        return "{id=" + id + ", street=" + street + ", streetNumber=" + streetNumber + "}";
     }
 
 }

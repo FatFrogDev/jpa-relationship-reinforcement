@@ -35,6 +35,19 @@ public class Invoice {
         this.client = client;
     }
 
+    public Invoice(String description, double total) {
+        this.description = description;
+        this.total = total;
+    }
+    
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    } 
+
     public Long getId() {
         return id;
     }
@@ -61,7 +74,6 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "Invoice [id=" + id + ", description=" + description + ", total=" + total + ", client=" + client.toString() + "]";
+        return "{id=" + id + ", description=" + description + ", total=" + total + "}";
     }
-    
 }

@@ -38,8 +38,26 @@ public class Client {
     //@Fetch(FetchType.EAGER)
     private List<Adress> addresses;
 
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
+    private List<Invoice> invoices;
+
+    // Alternative method to add invoices
+
+    // public Client addInvoice(Invoice invoice){
+    //     invoices.add(invoice);
+    //     invoice.setClient(this);
+    //     return this;
+    // }
+
+    public void addInvoice(Invoice invoice){
+        invoices.add(invoice);
+        invoice.setClient(this);
+    }
+
     public Client() {
         addresses = new ArrayList<>();
+        invoices = new ArrayList<>();
     }
 
     public Client(Long id, String name, String lastname, List<Adress> addresses) {
@@ -56,7 +74,7 @@ public class Client {
         this.lastname = lastname;
     }
 
-    public Long getId() {
+    public Long getId() { 
         return id;
     }
 
@@ -88,9 +106,36 @@ public class Client {
         this.addresses = addresses;
     }
 
-    @Override
-    public String toString() {
-        return "Client [id=" + id + ", name=" + name + ", lastname=" + lastname + ", addresses=" + addresses.toString() + "]";
+    
+    public List<Invoice> getInvoices() {
+        return invoices;
     }
 
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Client other = (Client) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Client [id=" + id + ", name=" + name + ", lastname=" + lastname + ", addresses=" + addresses.toString()
+                + ", invoices=" + invoices.toString() + "]";
+    } 
 }
